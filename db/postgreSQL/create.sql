@@ -3,6 +3,7 @@ CREATE TYPE PERIODOS AS ENUM ('MATUTINO', 'VESPERTINO', 'NOTURNO', 'INTEGRAL');
 
 -- Tabelas
 CREATE TABLE Classe(id SERIAL PRIMARY KEY,
+                    nome VARCHAR(120) NOT NULL,
                     sala_num INT NOT NULL,
                     predio CHAR(1) NOT NULL,
                     periodo PERIODOS NOT NULL,
@@ -26,9 +27,9 @@ CREATE INDEX idx_aluno_classe_id ON Aluno(classe_id);
 
 
 -- Inserir 2 classes na tabela Classe
-INSERT INTO Classe (sala_num, predio, periodo, em_curso, serie, ano)
-VALUES (101, 'A', 'MATUTINO', TRUE, 5, 2024),
-       (202, 'B', 'VESPERTINO', FALSE, 8, 2023);
+INSERT INTO Classe (nome, sala_num, predio, periodo, em_curso, serie, ano)
+VALUES ('Sala Professora Maria Borges',101, 'A', 'MATUTINO', TRUE, 5, 2024),
+       ('Laboratório Beato Carlos da Áustria',202, 'B', 'VESPERTINO', FALSE, 8, 2023);
 
 -- Inserir 10 alunos na tabela Aluno
 INSERT INTO Aluno (nome, sobrenome, pcd, ano_nasc, classe_id, cursando)

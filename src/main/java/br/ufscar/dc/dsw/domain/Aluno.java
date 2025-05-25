@@ -1,7 +1,7 @@
 package br.ufscar.dc.dsw.domain;
 
 public class Aluno {
-    private long id;
+    private int id;
     private String nome;
     private String sobrenome;
     private boolean pcd;
@@ -9,11 +9,33 @@ public class Aluno {
     private Classe classe;
     private boolean cursando;
 
-    public long getId() {
+    public Aluno(int id) {
+        this.id = id;
+    }
+
+    public Aluno(String nome, String sobrenome, boolean pcd, short ano_nasc, Classe classe, boolean cursando) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.pcd = pcd;
+        this.ano_nasc = ano_nasc;
+        this.classe = classe;
+        this.cursando = cursando;
+    }
+    public Aluno(int id, String nome, String sobrenome, boolean pcd, short ano_nasc, Classe classe, boolean cursando) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.pcd = pcd;
+        this.ano_nasc = ano_nasc;
+        this.classe = classe;
+        this.cursando = cursando;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

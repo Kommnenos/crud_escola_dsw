@@ -4,6 +4,7 @@ import br.ufscar.dc.dsw.types.Periodo;
 
 public class Classe {
     private int id;
+    private String nome;
     private short sala_num;
     private char predio;
     private Periodo periodo;
@@ -11,7 +12,7 @@ public class Classe {
     private byte serie;
     private short ano;
 
-    public Classe(int id, short sala_num, char predio, Periodo periodo, boolean em_curso, byte serie, short ano) {
+    public Classe(int id, String nome, short sala_num, char predio, Periodo periodo, boolean em_curso, byte serie, short ano) {
         this.id = id;
         this.sala_num = sala_num;
         this.predio = predio;
@@ -27,6 +28,14 @@ public class Classe {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public short getSala_num() {
