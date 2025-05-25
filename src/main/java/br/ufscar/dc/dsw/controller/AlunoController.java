@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "AlunoController", urlPatterns = {"/aluno"})
+@WebServlet(name = "AlunoController", urlPatterns = "/alunos/*")
 public class AlunoController extends HttpServlet{
 
     @Serial
@@ -85,7 +85,7 @@ public class AlunoController extends HttpServlet{
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setAttribute("classes", getClasses());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/aluno/cadastro.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/aluno/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -94,7 +94,7 @@ public class AlunoController extends HttpServlet{
         Aluno aluno = dao.getById(id);
         request.setAttribute("aluno", aluno);
         request.setAttribute("classes", getClasses());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/aluno/cadastro.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/aluno/formulario.jsp");
         dispatcher.forward(request, response);
     }
 

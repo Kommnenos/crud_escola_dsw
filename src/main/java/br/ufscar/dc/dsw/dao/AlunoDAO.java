@@ -39,7 +39,9 @@ public class AlunoDAO extends GenericDAO{
     public List<Aluno> getAll(){
 
         List<Aluno> listaAlunos = new ArrayList<>();
-        String sql = "SELECT * from Aluno a, Classe c WHERE a.classe_id = c.id";
+        String sql = "SELECT a.id, a.nome, a.sobrenome, a.pcd, a.ano_nasc, a.cursando, a.classe_id, " +
+                "c.nome as classe_nome, c.sala_num, c.predio, c.periodo, c.em_curso, c.serie, c.ano " +
+                "FROM Aluno a, Classe c WHERE a.classe_id = c.id";
 
         try{
             Connection conn = this.getConnection();
@@ -48,20 +50,20 @@ public class AlunoDAO extends GenericDAO{
             ResultSet resultSet = statement.executeQuery(sql);
 
             while(resultSet.next()){
-                int aluno_id = resultSet.getInt("a.id");
-                String aluno_nome = resultSet.getString("a.nome");
-                String aluno_sobrenome = resultSet.getString("a.sobrenome");
-                boolean aluno_pcd = resultSet.getBoolean("a.pcd");
-                short aluno_ano_nasc = resultSet.getShort("a.ano_nasc");
-                boolean aluno_cursando = resultSet.getBoolean("a.cursando");
-                int aluno_classe_id = resultSet.getInt("a.classe_id");
-                String classe_nome = resultSet.getString("c.nome");
-                short classe_sala_num = resultSet.getShort("c.sala_num");
-                char classe_predio = resultSet.getString("c.predio").charAt(0);
-                Periodo classe_periodo = Periodo.valueOf(resultSet.getString("c.periodo"));
-                boolean classe_em_curso = resultSet.getBoolean("c.em_curso");
-                byte classe_serie = resultSet.getByte("c.serie");
-                short classe_ano = resultSet.getShort("c.ano");
+                int aluno_id = resultSet.getInt("id");
+                String aluno_nome = resultSet.getString("nome");
+                String aluno_sobrenome = resultSet.getString("sobrenome");
+                boolean aluno_pcd = resultSet.getBoolean("pcd");
+                short aluno_ano_nasc = resultSet.getShort("ano_nasc");
+                boolean aluno_cursando = resultSet.getBoolean("cursando");
+                int aluno_classe_id = resultSet.getInt("classe_id");
+                String classe_nome = resultSet.getString("nome");
+                short classe_sala_num = resultSet.getShort("sala_num");
+                char classe_predio = resultSet.getString("predio").charAt(0);
+                Periodo classe_periodo = Periodo.valueOf(resultSet.getString("periodo"));
+                boolean classe_em_curso = resultSet.getBoolean("em_curso");
+                byte classe_serie = resultSet.getByte("serie");
+                short classe_ano = resultSet.getShort("ano");
                 Classe classe = new Classe(aluno_classe_id, classe_nome, classe_sala_num, classe_predio, classe_periodo, classe_em_curso, classe_serie, classe_ano);
                 Aluno aluno = new Aluno(aluno_id, aluno_nome, aluno_sobrenome, aluno_pcd, aluno_ano_nasc, classe, aluno_cursando);
                 listaAlunos.add(aluno);
@@ -135,13 +137,13 @@ public class AlunoDAO extends GenericDAO{
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
-                String nome = resultSet.getString("a.nome");
-                String sobrenome = resultSet.getString("a.sobrenome");
-                boolean pcd = resultSet.getBoolean("a.pcd");
-                short ano_nasc = resultSet.getShort("a.ano_nasc");
-                boolean cursando = resultSet.getBoolean("a.cursando");
+                String nome = resultSet.getString("nome");
+                String sobrenome = resultSet.getString("sobrenome");
+                boolean pcd = resultSet.getBoolean("pcd");
+                short ano_nasc = resultSet.getShort("ano_nasc");
+                boolean cursando = resultSet.getBoolean("cursando");
 
-                int classe_id = resultSet.getInt("a.classe_id");
+                int classe_id = resultSet.getInt("classe_id");
                 Classe classe = new ClasseDAO().getById(classe_id);
 
                 aluno = new Aluno(id, nome, sobrenome, pcd, ano_nasc, classe, cursando);

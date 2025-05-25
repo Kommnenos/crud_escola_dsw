@@ -33,11 +33,12 @@
         <c:forEach var="aluno" items="${requestScope.listaAlunos}">
             <tr>
                 <td>${aluno.id}</td>
-                <td>${aluno.titulo}</td>
-                <td>${aluno.editora.nome}</td>
-                <td>${aluno.autor}</td>
-                <td>${aluno.ano}</td>
-                <td>${aluno.preco}</td>
+                <td>${aluno.nome}</td>
+                <td>${aluno.sobrenome}</td>
+                <td>${aluno.classe.nome}</td>
+                <td>${aluno.pcd}</td>
+                <td>${aluno.ano_nasc}</td>
+                <td>${aluno.cursando}</td>
                 <td><a href="/${requestScope.contextPath}/alunos/edicao?id=${aluno.id}">Edição</a>
                     &nbsp;&nbsp;&nbsp;&nbsp; <a
                             href="/${requestScope.contextPath}/alunos/remocao?id=${aluno.id}"

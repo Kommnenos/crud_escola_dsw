@@ -31,7 +31,8 @@ public class ClasseDAO extends GenericDAO{
                 boolean em_curso = resultSet.getBoolean("em_curso");
                 byte serie = resultSet.getByte("serie");
                 short ano = resultSet.getShort("ano");
-                Classe classe = new Classe(id, sala_num, predio, periodo, em_curso, serie, ano);
+                String nome = resultSet.getString("nome");
+                Classe classe = new Classe(id, nome, sala_num, predio, periodo, em_curso, serie, ano);
                 listaClasses.add(classe);
             }
 
@@ -63,7 +64,8 @@ public class ClasseDAO extends GenericDAO{
                 boolean em_curso = resultSet.getBoolean("em_curso");
                 byte serie = resultSet.getByte("serie");
                 short ano = resultSet.getShort("ano");
-                classe = new Classe(id, sala_num, predio, periodo, em_curso, serie, ano);
+                String nome = resultSet.getString("nome");
+                classe = new Classe(id, nome, sala_num, predio, periodo, em_curso, serie, ano);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
