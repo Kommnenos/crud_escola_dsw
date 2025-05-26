@@ -14,6 +14,7 @@ public class Classe {
 
     public Classe(int id, String nome, short sala_num, char predio, Periodo periodo, boolean em_curso, byte serie, short ano) {
         this.id = id;
+        this.nome = nome;
         this.sala_num = sala_num;
         this.predio = predio;
         this.periodo = periodo;

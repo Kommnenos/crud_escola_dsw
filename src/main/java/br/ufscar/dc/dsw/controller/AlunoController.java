@@ -77,8 +77,13 @@ public class AlunoController extends HttpServlet{
 
     private Map<Integer, String> getClasses(){
         Map<Integer, String> editoras = new HashMap<>();
+        List<Classe> listaClasses = new ClasseDAO().getAll();
+        System.out.println("Found " + listaClasses.size() + " classes"); // Debug line
+
         for(Classe classe: new ClasseDAO().getAll()){
             editoras.put(classe.getId(), classe.getNome());
+            System.out.println("Added class: " + classe.getId() + " - " + classe.getNome());
+
         }
         return editoras;
     }

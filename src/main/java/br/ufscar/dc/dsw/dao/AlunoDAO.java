@@ -16,7 +16,7 @@ public class AlunoDAO extends GenericDAO{
 
     public void insert(Aluno aluno){
 
-        String sql = "INSERT INTO Aluno (nome, sobrenome, pcd, ano_nasc, classe_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Aluno (nome, sobrenome, pcd, ano_nasc, classe_id, cursando) VALUES (?, ?, ?, ?, ?, ?)";
 
         try{
             Connection conn = this.getConnection();
@@ -27,6 +27,7 @@ public class AlunoDAO extends GenericDAO{
             statement.setBoolean(3, aluno.isPcd());
             statement.setShort(4, aluno.getAno_nasc());
             statement.setInt(5, aluno.getClasse().getId());
+            statement.setBoolean(6, aluno.isCursando());
 
             statement.executeUpdate();
             statement.close();
@@ -39,7 +40,7 @@ public class AlunoDAO extends GenericDAO{
     public List<Aluno> getAll(){
 
         List<Aluno> listaAlunos = new ArrayList<>();
-        String sql = "SELECT a.id, a.nome, a.sobrenome, a.pcd, a.ano_nasc, a.cursando, a.classe_id, " +
+        String sql = "SELECT a.id, a.nome as aluno_nome, a.sobrenome, a.pcd, a.ano_nasc, a.cursando, a.classe_id, " +
                 "c.nome as classe_nome, c.sala_num, c.predio, c.periodo, c.em_curso, c.serie, c.ano " +
                 "FROM Aluno a, Classe c WHERE a.classe_id = c.id";
 
@@ -51,13 +52,13 @@ public class AlunoDAO extends GenericDAO{
 
             while(resultSet.next()){
                 int aluno_id = resultSet.getInt("id");
-                String aluno_nome = resultSet.getString("nome");
+                String aluno_nome = resultSet.getString("aluno_nome");
                 String aluno_sobrenome = resultSet.getString("sobrenome");
                 boolean aluno_pcd = resultSet.getBoolean("pcd");
                 short aluno_ano_nasc = resultSet.getShort("ano_nasc");
                 boolean aluno_cursando = resultSet.getBoolean("cursando");
                 int aluno_classe_id = resultSet.getInt("classe_id");
-                String classe_nome = resultSet.getString("nome");
+                String classe_nome = resultSet.getString("classe_nome");
                 short classe_sala_num = resultSet.getShort("sala_num");
                 char classe_predio = resultSet.getString("predio").charAt(0);
                 Periodo classe_periodo = Periodo.valueOf(resultSet.getString("periodo"));
@@ -99,7 +100,7 @@ public class AlunoDAO extends GenericDAO{
 
     public void update(Aluno aluno){
 
-        String sql = "UPDATE Aluno SET nome = ?, sobrenome = ?, pcd = ?, ano_nasc = ?, cursando = ? classe_id = ? WHERE id = ?";
+        String sql = "UPDATE Aluno SET nome = ?, sobrenome = ?, pcd = ?, ano_nasc = ?, cursando = ?, classe_id = ? WHERE id = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -123,20 +124,17 @@ public class AlunoDAO extends GenericDAO{
 
     }
 
-    public Aluno getById(int id){
+    public Aluno getById(int id) {
         Aluno aluno = null;
-        String sql = "SELECT * FROM Aluno a, Classe c WHERE a.id = ? AND a.classe_id = c.id";
+        String sql = "SELECT * FROM Aluno a LEFT JOIN Classe c ON a.classe_id = c.id WHERE a.id = ?";
 
         try {
-
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if(resultSet.next()) {
                 String nome = resultSet.getString("nome");
                 String sobrenome = resultSet.getString("sobrenome");
                 boolean pcd = resultSet.getBoolean("pcd");
@@ -144,22 +142,23 @@ public class AlunoDAO extends GenericDAO{
                 boolean cursando = resultSet.getBoolean("cursando");
 
                 int classe_id = resultSet.getInt("classe_id");
-                Classe classe = new ClasseDAO().getById(classe_id);
+                Classe classe = null;
+                if (!resultSet.wasNull()) {
+                    classe = new ClasseDAO().getById(classe_id);
+                }
 
                 aluno = new Aluno(id, nome, sobrenome, pcd, ano_nasc, classe, cursando);
 
                 resultSet.close();
                 statement.close();
                 conn.close();
-
             }
-
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return aluno;
     }
+
 
 
 
